@@ -701,11 +701,9 @@ typedef enum {
 
 前面说过，`switich:`后面的大括号不应该新开一行。`case:`后面一半是不用带大括号的，但如果你需要在里面声明临时变量，编译器要求必须要带大括号。当case后面的语句多余一行时，带上大括号。
 
-**Note:** With regard to case blocks with braces, this is one situation where braces will begin on the same line as the `case:` label but will still end on a new line.
 
 ```objc
-switch (condition) 
-{
+switch (condition) {
   case 1:
     // ...
     break;
@@ -730,8 +728,7 @@ switch (condition)
 当多个`case:`需要执行的代码一样时，需要去掉break，并注释`fall-through!`：
 
 ```objc
-switch (condition) 
-{
+switch (condition) {
   case 1:
     // ** fall-through! **
     
