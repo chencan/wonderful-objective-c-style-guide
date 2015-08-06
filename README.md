@@ -411,9 +411,7 @@ static NSTimeInterval const fadetime = 1.7;
 #define RGBColor(r,g,b) [UIColor colorWithRed:r/255.0f green:g/255.0f blue:b/255.0f alpha:1.0f]
 ```
 
-**Property names** 采用驼峰命名法并首字母**小**写。
-
-类的成员变量，采用驼峰命名法并首字母**小**写，并且前面带下划线。
+类的成员变量采用驼峰命名法并首字母**小**写。
 
 **Preferred:**
 
