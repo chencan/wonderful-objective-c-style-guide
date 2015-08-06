@@ -1,16 +1,18 @@
 # Objective-C style guide.
 
-这个style guide规范描述了我们iOS开发团队喜欢的Objectiv-C编程习惯。它的主要目的在于提高我们代码的可读性。
+## Introduction
+
+这个style guide规范描述了我们iOS开发团队喜欢的Objectiv-C编程习惯。
+
+代码规范的意义，在于提高团队各个成员写的代码的一致性和可读性。一致性能减少工程师编写代码风格的困惑和犹豫；良好的可读性更是能帮助我们浏览其他人代码、以便合作和code review。
+
+**它并不是去定义the right way or the wrong way，而是达成一个需要遵守的共识，it's about agreeing on doing things the same way。**
+
 
 这个规范可能比其他一般的style guide规范涵盖了更多的方面和细节。
 
 欢迎联系我，给出你关于这个规范的想法。
 
-## Introduction
-
-style guide规范的意义，在于提高团队各个成员代码的一致性和可读性。一致性能减轻工程师选择代码风格的困惑和犹豫；良好的可读性更是能帮助我们浏览其他人代码、以便合作和code review。
-
-**它并不是去定义the right way or the wrong way，而是达成一个需要遵守的共识，it's about agreeing on doing things the same way。**
 
 
 ## Credits
@@ -112,7 +114,6 @@ UIColor *myColour = [UIColor whiteColor];
 
 
 ## Project Organization
-。
 
 Xcode工程，采用类似下面的工程文件结构。
 
@@ -130,7 +131,7 @@ Your_Project
   |-- Helpers
 ```
 
-并且保持对应的物理文件系统路径，方便在finder里面查找，也能保持finder内文件整齐。因此需要加入新到group时，需要先在文件系统里新建一个folder。
+并且保持对应的物理文件系统路径，方便在finder里面查找，也能保持finder内文件整齐。因此需要加入新到group时，需要先在文件系统里新建一个folder，然后add这个folder。
 
 ## Code Organization
 
@@ -193,11 +194,9 @@ Preferences->Text Editing->Page Guide at column:
 As seen here:
 ![Xcode Page Guide Pref](http://mix-pub-dist.s3-website-us-west-1.amazonaws.com/objective-c-style-guide/img/pref_page_guide_sm-2.png)
 
-Objective-C is a verbose language. Selectors can be very long. The recommendation is to use an Xcode plugin along with a formatting configuration to facilitate the reformatting of code to comply with this guide.
-
 ## Spacing
 * 缩进使用的4个空格（Xcode默认）。
-* **方法体的花括号需要在新的一行开启，在新的一行关闭**。而其它花括号(`if`/`else`/`switch`/`while` etc.)，在行尾开启，在新一行关闭（Xcode默认）。
+* **方法体的花括号需要在新的一行开启，在新的一行关闭**。而其它花括号(`if`/`else`/`switch`/`while` etc.)，加入一个空格后在行尾开启，在新一行关闭（Xcode默认）。
 
 **Preferred:**
 
@@ -222,6 +221,7 @@ else {
 
  在使用*else*或者*else if*，它们前后的大括号应该是在一行，否则不太好看：
  
+**Not Preferred:**
 ```objc
 if (user.isHappy) 
 {
@@ -233,7 +233,7 @@ else
 }
 ```
 * methods之间只留一个空行。
-* 尽量使用auto-synthesis. 如果需要使用`@synthesize`，每个property需要新开一行， `@dynamic`也是需要新开一行。
+* 尽量使用auto-synthesis。如果需要使用`@synthesize`，每个property需要新开一行， `@dynamic`也是需要新开一行。
 * 当methods里面需要传入block时，不要使用冒号对齐对方式：
 
 **Preferred:**
@@ -413,7 +413,7 @@ static NSTimeInterval const fadetime = 1.7;
 
 **Property names** 采用驼峰命名法并首字母**小**写。
 
-**Instance variable names** 采用驼峰命名法并首字母**小**写，并且前面带下划线。
+类的成员变量，采用驼峰命名法并首字母**小**写，并且前面带下划线。
 
 **Preferred:**
 
@@ -1059,16 +1059,19 @@ This will prevent [possible and sometimes prolific crashes](http://cocoasamurai.
 
 避免一行太长，应该在合适的地方断行。
 
-```objc
-self.productsRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:productIdentifiers];
-```
-
-A long line of code like this should be carried on to the second line adhering to this style guide's Spacing section (two spaces).
+**Preferred:**
 
 ```objc
 self.productsRequest = [[SKProductsRequest alloc] 
   initWithProductIdentifiers:productIdentifiers];
 ```
+
+**Not Preferred:**
+
+```objc
+self.productsRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:productIdentifiers];
+```
+
 
 
 ## Warnings
