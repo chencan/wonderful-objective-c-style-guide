@@ -601,7 +601,7 @@ NSNumber *buildingStreetNumber = [NSNumber numberWithInteger:10018];
 
 ## Constants
 
-因为类型安全的缘故，常量不应该用`#define`去定义，应该生命为全局变量。
+因为类型安全的缘故，常量不应该用`#define`去定义，应该声明为全局变量。
 
 **Preferred:**
 
