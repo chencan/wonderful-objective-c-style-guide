@@ -798,13 +798,11 @@ nil可以表示`NO`，所以在`if`中，对象的值与`NO`比较是没必要�
 **Preferred:**
 
 ```objc
-if (someObject)
-{
+if (someObject) {
   // code...
 }
 
-if (![anotherObject boolValue]) 
-{
+if (![anotherObject boolValue]) {
   // code...
 }
 ```
@@ -836,8 +834,7 @@ If the name of a `BOOL` property is expressed as an adjective, the property can 
 **Preferred:**
 
 ```objc
-if (!error) 
-{
+if (!error) {
   return success;
 }
 ```
@@ -864,8 +861,7 @@ if (!error) return success;
 ```objc
 BOOL continuousPlayEnabled = [[MediaAppPrefs sharedInstance] continuousPlay];
 MediaAppTrack *nextMediaTrack = [MediaAppPlayer nextTrack];
-if (continuousPlayEnabled && nextMediaTrack)
-{
+if (continuousPlayEnabled && nextMediaTrack) {
   // play the next song
 }
 ```
@@ -873,8 +869,7 @@ if (continuousPlayEnabled && nextMediaTrack)
 **Not Preferred:**
 
 ```objc
-if ([[MediaAppPrefs sharedInstance] continuousPlay] && [MediaAppPlayer nextTrack])
-{
+if ([[MediaAppPrefs sharedInstance] continuousPlay] && [MediaAppPlayer nextTrack]) {
   // play the next song
 }
 ```
