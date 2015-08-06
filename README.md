@@ -626,7 +626,7 @@ NSString * const kMIX_MyClassShortDateFormat = @"MM/dd/yyyy";
 extern NSString * const kMIX_MyClass_ShortDateFormat;
 ```
 
-如果这个全局变量之用在当前类里面，需要在`.m`中去定义，并且前面加上`static`关键字限定作用域。
+如果这个全局变量只用在当前类里面，需要在`.m`中去定义，并且前面加上`static`关键字限定作用域。
 
 ```objC
 static NSString * const kMIX_MyClass_ShortDateFormat = @"MM/dd/yyyy";
