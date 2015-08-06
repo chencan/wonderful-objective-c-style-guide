@@ -466,7 +466,7 @@ typedef NSInteger PlayerState;
 * Overriding accessors (getters/setters)
 * Archiving activities: e.g. NSCoding Protocol's encodeWithCoder and initWithCoder
 
-当一个对象还没有初始化好，它处于不稳定的状态，调用getters/setters的副作用，可能会导致异常异常情况发生，所有应该直接使用`_variableName`。see: [Don’t Message self in Objective-C init (or dealloc)](http://qualitycoding.org/objective-c-init/)。
+当一个对象还没有初始化好，它处于不稳定的状态，调用getters/setters的副作用，可能会导致异常情况发生，所有应该直接使用`_variableName`。see: [Don’t Message self in Objective-C init (or dealloc)](http://qualitycoding.org/objective-c-init/)。
 
 重载getter/setter来添加自定义的逻辑，必须使用`_variableName`，否则会无限循环。
 
@@ -499,7 +499,7 @@ typedef NSInteger PlayerState;
 
 ## Variables
 
-变量名应该尽可能的描述自身的存储信息的内容。`for()`循环括弧中的临时变量、或用于计数的变量，可以简单一些。
+变量名应该尽可能的描述自身的存储信息的内容。`for()`小括弧中的临时变量、或用于计数的变量，可以简单一些。
 
 星号`*`应该紧靠变量名，而不是类型后面，比如：`NSString *text` 而不是 `NSString* text` 或 `NSString * text`。
 
