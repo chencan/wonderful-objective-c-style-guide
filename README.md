@@ -823,8 +823,6 @@ if (isAwesome == YES)     // Never do this.
 if (isAwesome == true)    // Never do this.
 ```
 
-If the name of a `BOOL` property is expressed as an adjective, the property can omit the “is” prefix but specifies the conventional name for the get accessor, for example:
-
 如果一个类的成员变量类型是`BOOL`，并且它可以是个形容词XXX，那么`is`的前缀可以省略，但需要加`getter=isXXX`
 
 ```objc
