@@ -640,7 +640,7 @@ static NSString * const kMIX_MyClass_ShortDateFormat = @"MM/dd/yyyy";
 
 ## Enumerated Types
 
-使用`NS_ENUM()`去定义枚举，它能够让编译器检查枚举的数据类型。
+使用`NS_ENUM()`去定义枚举，它能够让编译器检查枚举的数据类型。在swift里使用Objecive-C的枚举，也是需要使用`NS_ENUM()`才可以。
 
 **Preferred**
 
@@ -704,7 +704,9 @@ typedef enum {
 
 ## Switch Statements and Case Label Blocks
 
-前面说过，`switich:`后面的大括号不应该新开一行。`case:`后面一半是不用带大括号的，但如果你需要在里面声明临时变量，编译器要求必须要带大括号。当case后面的语句多余一行时，带上大括号。
+前面说过，`switich:`后面的大括号不应该新开一行。
+
+`case:`后面一般是不用带大括号的，但如果你需要在里面声明临时变量，编译器要求必须要带大括号。为了一致性和可读性，当case后面的语句多于一行时，带上大括号。
 
 
 ```objc
@@ -730,7 +732,7 @@ switch (condition) {
 
 ```
 
-当多个`case:`需要执行的代码一样时，需要去掉break，并注释`fall-through!`：
+当多个`case:`需要执行的代码一样时，需要去掉`break`，并注释`fall-through!`：
 
 ```objc
 switch (condition) {
@@ -748,7 +750,7 @@ switch (condition) {
 
 ```
 
-当使用枚举时，`default`是多余的，不用写。枚举的每个值都需要覆盖到，否则会有警告。
+当使用枚举时，`default`是多余的，不用写。每个枚举值都需要覆盖到，否则会有警告。
 
 ```objc
 kMIX_LeftMenuTopItemType menuType = kMIX_LeftMenuTopItemMain;
