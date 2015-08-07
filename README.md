@@ -13,8 +13,6 @@
 
 欢迎联系我，给出你关于这个规范的想法。
 
-
-
 ## Credits
 
 它绝大部分内容，来自[Wonderful Objective-C style guide](https://github.com/markeissler/wonderful-objective-c-style-guide)，并加入了自己的一些偏好。
@@ -131,7 +129,7 @@ Your_Project
   |-- Helpers
 ```
 
-并且保持对应的物理文件系统路径，方便在finder里面查找，也能保持finder内文件整齐。因此需要加入新到group时，需要先在文件系统里新建一个folder，然后add这个folder。
+并且保持对应的物理文件系统路径，方便在finder里面查找，也能保持finder内文件整齐。因此需要加入新的group时，需要先在文件系统里新建一个folder，然后add这个folder。
 
 ## Code Organization
 
@@ -195,7 +193,7 @@ As seen here:
 ![Xcode Page Guide Pref](http://mix-pub-dist.s3-website-us-west-1.amazonaws.com/objective-c-style-guide/img/pref_page_guide_sm-2.png)
 
 ## Spacing
-* 缩进使用的4个空格（Xcode默认）。
+* 缩进使用4个空格（Xcode默认）。
 * **方法体的花括号需要在新的一行开启，在新的一行关闭**。而其它花括号(`if`/`else`/`switch`/`while` etc.)，加入一个空格后在行尾开启，在新一行关闭（Xcode默认）。
 
 **Preferred:**
@@ -211,10 +209,11 @@ if (user.isHappy) {
 **Not Preferred:**
 
 ```objc
-if (user.isHappy) {
+if (user.isHappy) 
+{
     // Do something
-}
-else {
+} else 
+{
     // Do something else
 }
 ```
@@ -349,7 +348,7 @@ extern const BOOL kPDFReaderDefaultBookmarksEnabled;
 
 
 ### Naming Conventions for Methods and Variables
-长的、描述性的方法和变量名，对代码的self-documenting是很有帮助的。命名的清晰性和简洁性都很重要，然而，在Objective-C的世界里，不能为简洁性牺牲清晰性。
+详尽的、描述性的方法和变量名，对代码的self-documenting是很有帮助的。命名的清晰性和简洁性都很重要，然而，在Objective-C的世界里，不能为简洁性牺牲清晰性。
 
 **Preferred:**
 
@@ -384,7 +383,13 @@ Where:
 | Name    | unique name within tPRE_Space| BorderColor | kZRE_MyClass\_**BorderColor**        |
 |         |                              | isIphone    | mZBB_MyClass\_**isIphone**           |
 
-类型(t)元素要么是"k" (for constant)，要么是"m" (for macro)。PRE元素一般是公司名称前三个字母的大写。Space元素可以是Library名、类名、app名称或模块名称，采用驼峰命名法并首字母大写。Name元素是具体名称，constant采用驼峰命名法并首字母**大**写，macro采用驼峰命名法并首字母**小**写。
+类型(t)元素要么是"k" (for constant)，要么是"m" (for macro)。
+
+PRE元素一般是公司名称前三个字母的大写。
+
+Space元素可以是Library名、类名、app名称或模块名称，采用驼峰命名法并首字母大写。
+
+Name元素是具体名称，**constant**采用驼峰命名法并首字母**大**写，**macro**采用驼峰命名法并首字母**小**写。
 
 
 **Preferred:**
@@ -433,7 +438,7 @@ id varnm;
 ```
 
 ### Naming Conventions for Enumerated Types
-**Enumerated Type names** 和Constants类似，除了用e开头。
+**Enumerated Type names** 用e开头，其他和Constants一样。
 
 **Preferred:**
 
@@ -460,13 +465,13 @@ typedef NSInteger PlayerState;
 
 ### Underscores
 
-读或写所有properties, instance variables，都应该用`self.`，除了以下三种列外情况:
+读或写所有properties，instance variables，都应该用`self.`，除了以下三种列外情况:
 
 * Setup and Tear down: init and dealloc
 * Overriding accessors (getters/setters)
 * Archiving activities: e.g. NSCoding Protocol's encodeWithCoder and initWithCoder
 
-当一个对象还没有初始化好，它处于不稳定的状态，调用getters/setters的副作用，可能会导致异常情况发生，所有应该直接使用`_variableName`。see: [Don’t Message self in Objective-C init (or dealloc)](http://qualitycoding.org/objective-c-init/)。
+当一个对象还没有初始化好，它处于不稳定的状态，调用getters/setters的副作用，可能会导致异常情况发生，所以应该直接使用`_variableName`。see: [Don’t Message self in Objective-C init (or dealloc)](http://qualitycoding.org/objective-c-init/)。
 
 重载getter/setter来添加自定义的逻辑，必须使用`_variableName`，否则会无限循环。
 
@@ -541,7 +546,7 @@ property的**所有**属性，应该按照atomicity、accessibility(readonly, re
 @property (nonatomic) NSString *tutorialName;
 ``` 
 
-一个非容器类，如果它具有mutable的相关类，比如NSString与NSMutableString、NSURLRequest与NSMutableURLRequest，在定义类成员变量时，应该使用`copy`而不是`strong`。why？当你定义NSSting为strong时，它可能被赋值为NSMutableString类型对象时，这个对象可能会在你不注意的情况下改变值。
+一个非容器类，如果它具有mutable的相关类，比如NSString与NSMutableString、NSURLRequest与NSMutableURLRequest，在定义类成员变量时，应该使用`copy`而不是`strong`。why？当你定义NSSting为strong时，它可能被赋值为NSMutableString类型对象，这个对象可能会在你不注意的情况下改变值，而你既然把它类型声明为NSSting，这种情况显然不是你需要的。
 
 **Preferred:**
 
@@ -559,7 +564,7 @@ property的**所有**属性，应该按照atomicity、accessibility(readonly, re
 
 前面讲Underscores时，说了下点语法的使用。
 
-还有一个限制是，点语法只应该用在访问对象成员变量，而不是去调用独享的方法：
+还有一个限制是，点语法只应该用在访问对象成员变量，而不是去调用对象的方法：
 
 **Preferred:**
 
