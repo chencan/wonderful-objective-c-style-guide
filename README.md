@@ -375,7 +375,7 @@ int c = 0;
 Where:
 
 | Element | Definition                   | Value       | Example                              |
-| ------- | -----------------------------| ----------- | ------------------------------------ |
+| :------- | :----------------------------- | :----------- | :------------------------------------ |
 | t       | type = constant              | k*          | **k**MIX_MyClass_DefaultTitle        |
 |         | type = macro                 | m*          | **m**BUZ_MyClass_doubleIt            |
 | PRE     | three-letter prefix          | XXX         | k**XXX**_MyClass_MenuBarHeight       |
@@ -800,7 +800,7 @@ Objective-C使用`YES`和`NO`，而不是`true`和`false`（在CoreFoundation，
 
 nil可以表示`NO`，所以在`if`中，对象的值与`NO`比较是没必要的。
 
-在`if`中不要将`YES`与`BOOL`比较，`YES`是1bit，而`BOOL`是8bit。
+在`if`中不要任何值与`YES`、`NO`比较，`YES`是#define YES (BOOL)1，而`BOOL`是8bit。
 
 **Preferred:**
 
