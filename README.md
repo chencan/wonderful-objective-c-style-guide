@@ -34,9 +34,9 @@
 ### clang-format
 1. Download [clang-format 3.5.2](http://llvm.org/releases/3.5.2/clang+llvm-3.5.2-x86_64-apple-darwin.tar.xz)
 2. Copy clang-format into folder /usr/local/bin/
-3. Copy [pre-commit]() into folder .gits/hooks/
+3. Copy [pre-commit](https://github.com/chencan/wonderful-objective-c-style-guide/blob/master/pre-commit) into folder .gits/hooks/
 4. chmod +x pre-commit
-5. Change [.clang-format]() if you want to change the style.
+5. Change [.clang-format](https://github.com/chencan/wonderful-objective-c-style-guide/blob/master/clang-format) if you want to change the style.
 
 ## Table of Contents
 
