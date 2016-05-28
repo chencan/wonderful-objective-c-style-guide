@@ -31,25 +31,12 @@
 ###VVDocumenter-Xcode
 [VVDocumenter-Xcode](https://github.com/onevcat/VVDocumenter-Xcode)是一个帮我们写注释（用于生成文档）的Xcode插件。可以使用[Alcatraz Xcode package manager](http://alcatraz.io)安装后重启Xcode。
 
-###Uncrustify
-[BBUncrustifyPlugin-Xcode](https://github.com/benoitsan/BBUncrustifyPlugin-Xcode)是一个规范代码的Xcode插件，它封装了[uncrustify](https://github.com/bengardner/uncrustify)命令。可以使用[Alcatraz Xcode package manager](http://alcatraz.io)安装后重启Xcode。
-
-
-```
-Edit->Format Code->BBUncrustifyPlugin Preferences...
-```
-
-As seen here:
-![Xcode Page Guide Pref](http://mix-pub-dist.s3-website-us-west-1.amazonaws.com/objective-c-style-guide/img/uncrustify_pref_page_sm.png)
-
-
-### Uncrustify 0.61-snapshot
-
-[uncrustify](https://github.com/bengardner/uncrustify)的当前版本有些缺陷。推荐[download my snapshot build](http://mix-pub-dist.s3-website-us-west-1.amazonaws.com/objective-c-style-guide/uncrustify-dev-snapshots/uncrustify-0.61-snapshot.zip)，并替换BBUncrustifyPlugin-Xcode中的uncrustify命令。然后使用".uncrustify-061.cfg"作为配置文件。
-
-### Why Uncrustify and not Clang-Format?
-
-[uncrustify](https://github.com/bengardner/uncrustify) 更强大。
+### clang-format
+1. Download [clang-format 3.5.2](http://llvm.org/releases/3.5.2/clang+llvm-3.5.2-x86_64-apple-darwin.tar.xz)
+2. Copy clang-format into folder /usr/local/bin/
+3. Copy [pre-commit]() into folder .gits/hooks/
+4. chmod +x pre-commit
+5. Change [.clang-format]() if you want to change the style.
 
 ## Table of Contents
 
@@ -231,7 +218,8 @@ else
   // Do something else
 }
 ```
-* methods之间只留一个空行。
+
+* methods之间只留一个空行。
 * 尽量使用auto-synthesis。如果需要使用`@synthesize`，每个property需要新开一行， `@dynamic`也是需要新开一行。
 * 当methods里面需要传入block时，不要使用冒号对齐对方式：
 
@@ -699,7 +687,8 @@ typedef enum {
 typedef enum {
     PlayerStateOff,
     PlayerStatePlaying,
-    PlayerStatePaused} PlayerState;
+    PlayerStatePaused
+} PlayerState;
 ```
 
 ## Switch Statements and Case Label Blocks
@@ -915,7 +904,8 @@ result = isHorizontal ? x : y;
   BOOL continuousPlayEnabled = [[MediaAppPrefs sharedInstance] continuousPlay];
   MediaAppTrack *nextMediaTrack = [MediaAppPlayer nextTrack];
   
-  return (continuousPlayEnabled && nextMediaTrack);}  
+  return (continuousPlayEnabled && nextMediaTrack);
+}  
 ```
 
 **Not Preferred:**
@@ -923,7 +913,8 @@ result = isHorizontal ? x : y;
 ```objc
 - (BOOL) playNext
 {
-  return ([[MediaAppPrefs sharedInstance] continuousPlay] && [MediaAppPlayer nextTrack]);}  
+  return ([[MediaAppPrefs sharedInstance] continuousPlay] && [MediaAppPlayer nextTrack]);
+}  
 ```
 
 
