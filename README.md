@@ -388,6 +388,7 @@ extern const BOOL kPDFReaderDefaultBookmarksEnabled;
 
 
 <h3 id="naming-conventions-for-methods-and-variables">Naming Conventions for Methods and Variables</h3>
+
 详尽的、描述性的方法和变量名，对代码的self-documenting是很有帮助的。命名的清晰性和简洁性都很重要，然而，在Objective-C的世界里，不能为简洁性牺牲清晰性。
 
 **Preferred:**
@@ -407,6 +408,7 @@ int c = 0;
 ```
 
 <h3 id="naming-conventions-for-constants-and-macros">Naming Conventions for Constants and Macros</h3>
+
 下面的命名方式第一眼望去可能觉得好复杂，习惯习惯了就好了，别偷懒。。。
 
 
@@ -478,6 +480,7 @@ id varnm;
 ```
 
 <h3 id="naming-conventions-for-enumerated-types">Naming Conventions for Enumerated Types</h3>
+
 **Enumerated Type names** 用e开头，其他和Constants一样。
 
 **Preferred:**
