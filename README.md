@@ -152,6 +152,7 @@ Your_Project
   |-- Controllers
   |-- Stores
   |-- Helpers
+  |-- ...
 ```
 
 并且保持对应的物理文件系统路径，方便在finder里面查找，也能保持finder内文件整齐。因此需要加入新的group时，需要先在文件系统里新建一个folder，然后add这个folder。
@@ -215,7 +216,7 @@ Preferences->Text Editing->Page Guide at column:
 ```
 
 As seen here:
-![Xcode Page Guide Pref](../attachment/code_style/pref_page_guide_sm-2.png)
+![Xcode Page Guide Pref](http://mix-pub-dist.s3-website-us-west-1.amazonaws.com/objective-c-style-guide/img/pref_page_guide_sm-2.pngs)
 
 <h2 id="spacing">Spacing</h2>
 * 缩进使用4个空格（Xcode默认）。
