@@ -38,6 +38,44 @@
 4. chmod +x pre-commit
 5. Change [.clang-format](https://github.com/chencan/wonderful-objective-c-style-guide/blob/master/clang-format) if you want to change the style.
 
+###Cocoapods
+
+当需要一些“轮子”时，可以先在现有的代码里面找找（Podfile或者Libraray）。没有的话，再用pod search或者github找找，看有没有代码质量高的、大家广泛使用的（watch、star、fork数量多）、比较活跃、比较友好的第三方代码，看看实现原理以及使用方法，是否适合我们的需求。
+
+或可以通过继承，满足我们的需求。如果第三方的代码有bug，或者需要改进，可以自己fork后修改使用（顺便可以给作者发一个pull request）
+
+在你有更好的实现、有时间的前提下，可以自己造更好的“轮子”。
+
+Podfile.lock 有变动表示使用的第三库版本有变化，如果采用新的版本，需要检查新版本的第三方库没有问题。
+
+尽量使用最新版本的第三方库。
+
+但发包前对此文件的修改要多尤其小心。最好发完包后，自己看看新版本有无问题，如果有必要再让测试看看。   
+
+
+####Cocoapods命令解释
+* pod update: Updating local specs repositories,  更新工程中的第三方库
+* pod update --no-repo-update：使用local specs repositories中最新的版本
+* pod install: Updating local specs repositories,  安装podfile.lock中规定版本
+* pod install --no-repo-update：当podfile.lock中规定的版本，不在local specs repositories中，install会失败  
+
+
+####Cocoapods使用规范
+* pod update命令，由小组某个成员，开启定时任务：  
+  30 12 * * 1 cd /Users/Can/Workspace/zuche;pod update;  
+  //用来检查第三方库是否有更新，并升级库。这个是为了定期检查第三方库是否有新版本。  
+  //一个小组成员做这件事就可以       
+  //发现Podfile.lock变了，表示第三方代码版本升级了，应该了解一下升级的内容，另外上线前不要轻易升级影响功能第三方代码  
+* pod install命令，由小组其他成员，开启定时任务：  
+  30 12 * * * cd /Users/Can/Workspace/zuche;pod install;  
+  //主要用来Updating local specs repositories，防止install失败  
+* pull完代码推荐使用pod install，pod install --no-repo-update，后者速度更快可能会报错
+* git checkout 老代码，推荐使用pod install --no-repo-update，因为是老代码，一般不会报错
+* **Podfile.lock任何情况下不能删除**   
+* pod update --no-repo-update，只用在pod install不成功，但需要马上编译成功的情况
+
+
+
 ## Table of Contents
 
 * [Language](#language)
@@ -81,7 +119,7 @@
 * [Other Objective-C Style Guides](#other-objective-c-style-guides)
 
 
-## Language
+<h2 id="language">Language</h2>
 
 使用美国英语，而非英国等国家英语。
 
@@ -98,7 +136,7 @@ UIColor *myColour = [UIColor whiteColor];
 ```
 
 
-## Project Organization
+<h2 id="project-organization">Project Organization</h2>
 
 Xcode工程，采用类似下面的工程文件结构。
 
@@ -118,7 +156,7 @@ Your_Project
 
 并且保持对应的物理文件系统路径，方便在finder里面查找，也能保持finder内文件整齐。因此需要加入新的group时，需要先在文件系统里新建一个folder，然后add这个folder。
 
-## Code Organization
+<h2 id="code-organization">Code Organization</h2>
 
 使用`#pragma mark -`对.m文件里面的Methods进行归类。
 
@@ -168,7 +206,7 @@ Your_Project
 - (NSString *)description {}
 ```
 
-## Line Wrapping (Code Width)
+<h2 id="language">line-wrapping-(code-width)</h2>
 
 合适的规范一般并不需要一行能容纳无限长度的代码，80列的限制反而能提醒你，可能你的代码可读性不太好。
 
@@ -177,10 +215,23 @@ Preferences->Text Editing->Page Guide at column:
 ```
 
 As seen here:
-![Xcode Page Guide Pref](http://mix-pub-dist.s3-website-us-west-1.amazonaws.com/objective-c-style-guide/img/pref_page_guide_sm-2.png)
+![Xcode Page Guide Pref](../attachment/code_style/pref_page_guide_sm-2.png)
 
-## Spacing
+<h2 id="spacing">Spacing</h2>
 * 缩进使用4个空格（Xcode默认）。
+* 操作符左右留空格。
+
+**Preferred:**
+```objc
+if (self.changeEable && self.shouldChange)
+sum = count1 + count2
+```
+**Not Preferred:**
+```objc
+if (self.changeEable&&self.shouldChange)
+sum=count1+count2
+```
+
 * **方法体的花括号需要在新的一行开启，在新的一行关闭**。而其它花括号(`if`/`else`/`switch`/`while` etc.)，加入一个空格后在行尾开启，在新一行关闭（Xcode默认）。
 
 **Preferred:**
@@ -208,6 +259,7 @@ if (user.isHappy)
  在使用*else*或者*else if*，它们前后的大括号应该是在一行，否则不太好看：
  
 **Not Preferred:**
+
 ```objc
 if (user.isHappy) 
 {
@@ -218,8 +270,7 @@ else
   // Do something else
 }
 ```
-
-* methods之间只留一个空行。
+* methods之间只留一个空行。
 * 尽量使用auto-synthesis。如果需要使用`@synthesize`，每个property需要新开一行， `@dynamic`也是需要新开一行。
 * 当methods里面需要传入block时，不要使用冒号对齐对方式：
 
@@ -247,7 +298,7 @@ else
                  }];
 ```
 
-## Comments
+<h2 id="comments">Comments</h2>
 
 如果需要注释，它只用来解释**为什么**这段代码要这么写，并且是正确的，代码变化时也需要马上更新，不能有误导。
 
@@ -255,7 +306,7 @@ else
 
 **Exception: 上面两条不适用于生成文档用的注释.**
 
-## Documentation
+<h2 id="documentation">Documentation</h2>
 
 在头文件中的以下内容，需要写注释用来生成文档（可以使用appledoc）。
 
@@ -268,13 +319,13 @@ else
 * Class Methods
 * Instance Methods
 
-**Class Documentation**
+<a id="class-documentation">Class Documentation</a>
 
 ```objc
 -- **EXAMPLE PENDING** --
 ```
 
-**Constant Documentation**
+<a id="constant-documentation">Constant Documentation</a>
 
 ```objc
 /**
@@ -284,7 +335,7 @@ else
 extern const BOOL kPDFReaderDefaultBookmarksEnabled;
 ```
 
-**Property Documentation**
+<a id="property-documentation">Property Documentation</a>
 
 ```objc
 /**
@@ -296,7 +347,7 @@ extern const BOOL kPDFReaderDefaultBookmarksEnabled;
     BOOL bookmarksEnabled;
 ```
 
-**Class Method Documentation**
+<a id="class-method-documentation">Class Method Documentation</a>
 
 ```objc
 /**
@@ -307,7 +358,7 @@ extern const BOOL kPDFReaderDefaultBookmarksEnabled;
 + (instancetype)sharedConfig;
 ```
 
-**Instance Method Documentation**
+<a id="instance-method-documentation">Instance Method Documentation</a>
 
 ```objc
 /**
@@ -332,10 +383,10 @@ extern const BOOL kPDFReaderDefaultBookmarksEnabled;
 - (void)updateToolbarBookmarkIcon;
 ```
 
-## Naming
+<h2 id="naming">Naming</h2>
 
 
-### Naming Conventions for Methods and Variables
+<h3 id="naming-conventions-for-methods-and-variables">Naming Conventions for Methods and Variables</h3>
 详尽的、描述性的方法和变量名，对代码的self-documenting是很有帮助的。命名的清晰性和简洁性都很重要，然而，在Objective-C的世界里，不能为简洁性牺牲清晰性。
 
 **Preferred:**
@@ -354,7 +405,7 @@ NSString *string = @"My Title";
 int c = 0;
 ```
 
-### Naming Conventions for Constants and Macros
+<h3 id="naming-conventions-for-constants-and-macros">Naming Conventions for Constants and Macros</h3>
 下面的命名方式第一眼望去可能觉得好复杂，习惯习惯了就好了，别偷懒。。。
 
 
@@ -425,7 +476,7 @@ id varnm;
 @synthesize varnm;
 ```
 
-### Naming Conventions for Enumerated Types
+<h3 id="naming-conventions-for-enumerated-types">Naming Conventions for Enumerated Types</h3>
 **Enumerated Type names** 用e开头，其他和Constants一样。
 
 **Preferred:**
@@ -451,7 +502,7 @@ enum {
 typedef NSInteger PlayerState;
 ```
 
-### Underscores
+<h3 id="underscores">Underscores</h3>
 
 读或写所有properties，instance variables，都应该用`self.`，除了以下三种列外情况:
 
@@ -467,7 +518,7 @@ typedef NSInteger PlayerState;
 
 还有，local variables不能使用下划线。
 
-## Methods
+<h2 id="methods">Methods</h2>
 
 方法名的-/+符号后面要留一个空格，冒号前面的描述词不能省略，方法里面不要使用and。
 
@@ -490,11 +541,13 @@ typedef NSInteger PlayerState;
 - (instancetype)initWith:(int)width and:(int)height;  // Never do this.
 ```
 
-## Variables
+<h2 id="variables">Variables</h2>
 
 变量名应该尽可能的描述自身的存储信息的内容。`for()`小括弧中的临时变量、或用于计数的变量，可以简单一些。
 
 星号`*`应该紧靠变量名，而不是类型后面，比如：`NSString *text` 而不是 `NSString* text` 或 `NSString * text`。
+
+如果存在qualifier，格式应该为`ClassName * qualifier variableName;`。
 
 为了一致性，类的成员变量应该使用`property`。
 
@@ -516,7 +569,7 @@ typedef NSInteger PlayerState;
 }
 ```
 
-## Property Attributes
+<h2 id="property-attributes">Property Attributes</h2>
 
 property的**所有**属性，应该按照atomicity、accessibility(readonly, readwrite)、storage的顺序明确列出来。
 
@@ -548,7 +601,7 @@ property的**所有**属性，应该按照atomicity、accessibility(readonly, re
 @property (nonatomic, readwrite, strong) NSString *tutorialName;
 ```
 
-## Dot-Notation Syntax
+<h2 id="dot-notation-syntax">Dot-Notation Syntax</h2>
 
 前面讲Underscores时，说了下点语法的使用。
 
@@ -557,7 +610,7 @@ property的**所有**属性，应该按照atomicity、accessibility(readonly, re
 **Preferred:**
 
 ```objc
-NSInteger arrayCount = [self.array count];
+NSInteger arrayCount = self.array.count;
 view.backgroundColor = [UIColor orangeColor];
 [UIApplication sharedApplication].delegate;
 ```
@@ -565,12 +618,12 @@ view.backgroundColor = [UIColor orangeColor];
 **Not Preferred:**
 
 ```objc
-NSInteger arrayCount = self.array.count;
+NSInteger arrayCount = [self.array count];
 [view setBackgroundColor:[UIColor orangeColor]];
 UIApplication.sharedApplication.delegate;
 ```
 
-## Literals
+<h2 id="literals">Literals</h2>
 
 尽可能使用语法糖去创建immutable对象。
 
@@ -592,7 +645,7 @@ NSNumber *shouldUseLiterals = [NSNumber numberWithBool:YES];
 NSNumber *buildingStreetNumber = [NSNumber numberWithInteger:10018];
 ```
 
-## Constants
+<h2 id="constants">Constants</h2>
 
 因为类型安全的缘故，常量不应该用`#define`去定义，应该声明为全局变量。
 
@@ -626,7 +679,7 @@ static NSString * const kMIX_MyClass_ShortDateFormat = @"MM/dd/yyyy";
 ```
 一个static变量如果定义在函数体里面，它的值能够一直保存，下次调用这个函数时，它的值还是上次调用这个函数后的值。
 
-## Enumerated Types
+<h2 id="enumerated-types">Enumerated Types</h2>
 
 使用`NS_ENUM()`去定义枚举，它能够让编译器检查枚举的数据类型。在swift里使用Objecive-C的枚举，也是需要使用`NS_ENUM()`才可以。
 
@@ -687,11 +740,10 @@ typedef enum {
 typedef enum {
     PlayerStateOff,
     PlayerStatePlaying,
-    PlayerStatePaused
-} PlayerState;
+    PlayerStatePaused} PlayerState;
 ```
 
-## Switch Statements and Case Label Blocks
+<h2 id="switch-statements-and-case-label-blocks">Switch Statements and Case Label Blocks</h2>
 
 前面说过，`switich:`后面的大括号不应该新开一行。
 
@@ -758,7 +810,7 @@ switch (menuType) {
 ```
 
 
-## Private Properties
+<h2 id="private-properties">Private Properties</h2>
 
 类私有的变量应该声明在class extensions (anonymous categories)中。它可以放在`.m`文件里，或者新建一个 <headerfile>+Private.h文件，给子类或测试用。
 
@@ -774,7 +826,7 @@ switch (menuType) {
 @end
 ```
 
-## Image Naming
+<h2 id="image-naming">Image Naming</h2>
 
 图片放入Images.xassets，命名方式是首字母大写的驼峰命名法，并将不同的部分往后靠，在命名中尽量加入模块名、类名进行区分。比如ShortRentCarRentButtonNormal，ShortRentCarRentButtonTouched。
 
@@ -783,7 +835,7 @@ switch (menuType) {
 * `RefreshBarButtonItem` / `RefreshBarButtonItem@2x` and `RefreshBarButtonItemSelected` / `RefreshBarButtonItemSelected@2x`
 * `ArticleNavigationBarWhite` / `ArticleNavigationBarWhite@2x` and `ArticleNavigationBarBlackSelected` / `ArticleNavigationBarBlackSelected@2x`.
 
-## Booleans
+<h2 id="booleans">Booleans</h2>
 
 Objective-C使用`YES`和`NO`，而不是`true`和`false`（在CoreFoundation，C或C++代码里可以使用）。
 
@@ -820,7 +872,7 @@ if (isAwesome == true)    // Never do this.
 
 参见[Cocoa Naming Guidelines](https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/CodingGuidelines/Articles/NamingIvarsAndTypes.html#//apple_ref/doc/uid/20001284-BAJGIIJE).
 
-## Conditionals
+<h2 id="conditionals">Conditionals</h2>
 
 为了避免错误、方便以后增加代码、一致性和可读性，`if`后面的大括号应该一直有，大括号在`if`所在行开启。避免的错误包括误将`if`大括号代码块里面的内容弄到`if`外面去了，还有[even more dangerous defect](http://programmers.stackexchange.com/a/16530)
 
@@ -846,9 +898,9 @@ or
 if (!error) return success;
 ```
 
-### Conditional Expressions
+<h3 id="conditional-expressions">Conditional Expressions</h3>
 
-`if`小括号里面的表达式，应该是一个变量，而不是一个函数调用。
+`if`小括号里面的表达式，应该是一个变量，而不是一个函数调用，在`if`小括号里包含太多逻辑不太容易引起人注意。但类似`[anObject boolValue]`这种只会读值，不会有其他逻辑的，是一个例外，但anObject的变量名也需要足够清楚，这种情况单独再声明一个bool型变量不会增加可读性。
 
 **Preferred:**
 
@@ -868,7 +920,7 @@ if ([[MediaAppPrefs sharedInstance] continuousPlay] && [MediaAppPlayer nextTrack
 }
 ```
 
-### Ternary Operator
+<h3 id="ternary-operator">Ternary Operator</h3>
 
 三元操作符号不可滥用，导致可读性降低。
 
@@ -890,7 +942,7 @@ result = a > b ? x = c > d ? c : d : y;
 result = isHorizontal ? x : y;
 ```
 
-## Return Statements
+<h2 id="return-statements">Return Statements</h2>
 
 不要`return`一个函数调用。
 
@@ -904,8 +956,7 @@ result = isHorizontal ? x : y;
   BOOL continuousPlayEnabled = [[MediaAppPrefs sharedInstance] continuousPlay];
   MediaAppTrack *nextMediaTrack = [MediaAppPlayer nextTrack];
   
-  return (continuousPlayEnabled && nextMediaTrack);
-}  
+  return (continuousPlayEnabled && nextMediaTrack);}  
 ```
 
 **Not Preferred:**
@@ -913,12 +964,11 @@ result = isHorizontal ? x : y;
 ```objc
 - (BOOL) playNext
 {
-  return ([[MediaAppPrefs sharedInstance] continuousPlay] && [MediaAppPlayer nextTrack]);
-}  
+  return ([[MediaAppPrefs sharedInstance] continuousPlay] && [MediaAppPlayer nextTrack]);}  
 ```
 
 
-## Init Methods
+<h2 id="init-methods">Init Methods</h2>
 
 初始化方法返回类型应该为`instancetype`，而不是`id`。
 
@@ -938,7 +988,7 @@ result = isHorizontal ? x : y;
 
 另外，应该定义更安全、合理的初始化方法。参见[Cocoa Fundamentals Guide](https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/CocoaFundamentals/Introduction/Introduction.html)中Object Creation一章节。
 
-## Class Constructor Methods
+<h2 id="class-constructor-methods">Class Constructor Methods</h2>
 
 类的创建对象便捷方法返回类型应该为`instancetype`，而不是`id`。
 
@@ -950,7 +1000,7 @@ result = isHorizontal ? x : y;
 
 参见[NSHipster.com](http://nshipster.com/instancetype/).
 
-## CGRect Functions
+<h2 id="cgrect-functions">CGRect Functions</h2>
 
 获取`CGRect`的`x`、`y`、`width`或`height`，应该使用[`CGGeometry` functions](http://developer.apple.com/library/ios/#documentation/graphicsimaging/reference/CGGeometry/Reference/reference.html) 而不是直接访问结构体成员。 From Apple's `CGGeometry` reference:
 
@@ -980,7 +1030,7 @@ CGFloat height = frame.size.height;
 CGRect frame = (CGRect){ .origin = CGPointZero, .size = frame.size };
 ```
 
-## Error handling
+<h2 id="error-handling">Error handling</h2>
 
 参见[Apple's developer documentation](https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/ErrorHandling/ErrorHandling.html), 可以向方法传入NSError变量的指针获取异常情况，调用这类方法时，需要对NSError变量进行检查，如果错误需要作出合适的处理：
 
@@ -1008,7 +1058,7 @@ if (![self trySomethingWithError:&error]) {
 }
 ```
 
-## Singletons
+<h2 id="singletons">Singletons</h2>
 
 单例的正确创建方法：
 
@@ -1041,7 +1091,7 @@ This will prevent [possible and sometimes prolific crashes](http://cocoasamurai.
 
 因为不应该给单例对象发送`dealloc`消息。参见[StackOverflow thread](http://stackoverflow.com/a/7599682).
 
-## Line Breaks
+<h2 id="line-breaks">Line Breaks</h2>
 
 避免一行太长，应该在合适的地方断行。
 
@@ -1060,11 +1110,19 @@ self.productsRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:pro
 
 
 
-## Warnings
+<h2 id="warnings">Warnings</h2>
 
 在target's Build Settings，中应该开启"Treat Warnings as Errors"，并开启尽可能多的警告。参见[additional warnings](http://boredzo.org/blog/archives/2009-11-07/warnings)。如果有些警告你无法避免，可以使用[Clang's pragma feature](http://clang.llvm.org/docs/UsersManual.html#controlling-diagnostics-via-pragmas)。
 
-# Other Objective-C Style Guides
+
+<h2 id="log">Log</h2>
+
+使用[DDLog](https://github.com/CocoaLumberjack/CocoaLumberjack)。并使用合适的等级打印不同级别的信息。
+
+
+
+
+<h2 id="other-objective-c-style-guides">Other Objective-C Style Guides</h2>
 
 上面的规范可能你不太喜欢，或者没有涉及到你需要的某些方面，可以参考下面的内容:
 
