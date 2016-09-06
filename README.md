@@ -32,6 +32,9 @@
 [VVDocumenter-Xcode](https://github.com/onevcat/VVDocumenter-Xcode)是一个帮我们写注释（用于生成文档）的Xcode插件。可以使用[Alcatraz Xcode package manager](http://alcatraz.io)安装后重启Xcode。
 
 ### clang-format
+
+这个工具能实现在使用git提交代码时，自动format代码。
+
 1. Download [clang-format 3.5.2](http://llvm.org/releases/3.5.2/clang+llvm-3.5.2-x86_64-apple-darwin.tar.xz)
 2. Copy clang-format into folder /usr/local/bin/
 3. Copy [pre-commit](https://github.com/chencan/wonderful-objective-c-style-guide/blob/master/pre-commit) into folder .gits/hooks/
@@ -271,7 +274,8 @@ else
   // Do something else
 }
 ```
-* methods之间只留一个空行。
+
+* methods之间只留一个空行。
 * 尽量使用auto-synthesis。如果需要使用`@synthesize`，每个property需要新开一行， `@dynamic`也是需要新开一行。
 * 当methods里面需要传入block时，不要使用冒号对齐对方式：
 
@@ -744,7 +748,8 @@ typedef enum {
 typedef enum {
     PlayerStateOff,
     PlayerStatePlaying,
-    PlayerStatePaused} PlayerState;
+    PlayerStatePaused
+} PlayerState;
 ```
 
 <h2 id="switch-statements-and-case-label-blocks">Switch Statements and Case Label Blocks</h2>
@@ -960,7 +965,8 @@ result = isHorizontal ? x : y;
   BOOL continuousPlayEnabled = [[MediaAppPrefs sharedInstance] continuousPlay];
   MediaAppTrack *nextMediaTrack = [MediaAppPlayer nextTrack];
   
-  return (continuousPlayEnabled && nextMediaTrack);}  
+  return (continuousPlayEnabled && nextMediaTrack);
+}  
 ```
 
 **Not Preferred:**
@@ -968,7 +974,8 @@ result = isHorizontal ? x : y;
 ```objc
 - (BOOL) playNext
 {
-  return ([[MediaAppPrefs sharedInstance] continuousPlay] && [MediaAppPlayer nextTrack]);}  
+  return ([[MediaAppPrefs sharedInstance] continuousPlay] && [MediaAppPlayer nextTrack]);
+}  
 ```
 
 
