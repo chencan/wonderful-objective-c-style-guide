@@ -219,7 +219,7 @@ Preferences->Text Editing->Page Guide at column:
 ```
 
 As seen here:
-![Xcode Page Guide Pref](http://mix-pub-dist.s3-website-us-west-1.amazonaws.com/objective-c-style-guide/img/pref_page_guide_sm-2.pngs)
+![Xcode Page Guide Pref](http://mix-pub-dist.s3-website-us-west-1.amazonaws.com/objective-c-style-guide/img/pref_page_guide_sm-2.png)
 
 <h2 id="spacing">Spacing</h2>
 * 缩进使用4个空格（Xcode默认）。
