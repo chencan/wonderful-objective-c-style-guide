@@ -33,7 +33,7 @@
 
 ### clang-format
 
-这个工具能实现在使用git提交代码时，自动format代码。
+给git添加hook，使用clang－format命令，让我们在提交代码时，自动format代码。
 
 1. Download [clang-format 3.5.2](http://llvm.org/releases/3.5.2/clang+llvm-3.5.2-x86_64-apple-darwin.tar.xz)
 2. Copy clang-format into folder /usr/local/bin/
