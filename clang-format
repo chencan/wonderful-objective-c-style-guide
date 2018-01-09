@@ -3,7 +3,7 @@
 # Clang Coding Style for Objective-C.
 # Based on LLVM Coding Style.
 # The fllowing rules are targetting styles defined in clang-format 3.5, and some commented styles are only supported in 3.6.
-# 2015, Augmn Inc.
+
 
 Language: Cpp
 BasedOnStyle: LLVM 
